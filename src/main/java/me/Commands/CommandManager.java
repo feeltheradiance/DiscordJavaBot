@@ -49,10 +49,10 @@ public class CommandManager {
             args = "";
         }
         if (getCommands().contains(command)) {
-            if (!isValidCommand(event, command)) {
-                return;
+            if (isValidCommand(event, command)) {
+                commands.get(command).executeCommand(event, args);
+
             }
-            commands.get(command).executeCommand(event, args);
         } else {
             event.getChannel().sendMessageFormat("There is no such a command!\nUse `%shelp` to get more information!",
                     JavaBotConfig.get("PREFIX")).queue();
@@ -86,14 +86,6 @@ public class CommandManager {
     private boolean isValidCommand(GuildMessageReceivedEvent event, String command){
         switch (getCommand(command).getType()) {
             case "Music":
-                if (!event.getChannel().getName().equalsIgnoreCase("music")) {
-                    if (event.getGuild().getTextChannelsByName("music", true).isEmpty()) {
-                        event.getChannel().sendMessageFormat("You need to create **music** text channel and then use this command in it!").queue();
-                    } else {
-                        event.getChannel().sendMessageFormat("You had to be in a **music** text channel!").queue();
-                    }
-                    return false;
-                }
                 if (!event.getMember().getVoiceState().inVoiceChannel()) {
                     event.getChannel().sendMessageFormat("You need to be in a voice channel to do this right now!").queue();
                     return false;
