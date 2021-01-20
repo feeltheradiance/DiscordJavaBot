@@ -37,7 +37,7 @@ public class JavaBot {
                 .enableIntents(gatewayIntents)
                 .enableCache(cacheFlags)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
-                .setActivity(Activity.watching("!help"))
+                .setActivity(Activity.watching(JavaBotConfig.get("PREFIX") + "help"))
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .build();
     }
